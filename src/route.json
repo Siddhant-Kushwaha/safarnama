@@ -1,0 +1,713 @@
+{
+ "train": {
+  "number": "12313",
+  "name": "Sealdah–New Delhi Rajdhani Express",
+  "date": "2026-11-17"
+ },
+ "places": [
+  {
+   "code": "ASN",
+   "kind": "halt",
+   "name_en": "Asansol Jn",
+   "slug": "asn",
+   "ink": "#3b2a66",
+   "has_art": true,
+   "state": "West Bengal",
+   "district": "Paschim Bardhaman",
+   "elev_m": 96,
+   "names": {
+    "bn": "আসানসোল",
+    "hi": "आसनसोल"
+   },
+   "board_langs": [
+    "bn",
+    "hi",
+    "en"
+   ],
+   "board_verified": false,
+   "speciality": {
+    "label": "Coal and steel country",
+    "line": "The Raniganj coalfield and the Burnpur steelworks surround the town.",
+    "osop": false
+   },
+   "fact": "Its electric loco shed is the oldest on Indian Railways.",
+   "src": [
+    "https://en.wikipedia.org/wiki/Asansol_Junction_railway_station",
+    "https://erail.in/train-enquiry/12313"
+   ],
+   "vignette": null,
+   "km": 207,
+   "arr": "19:06",
+   "dep": "19:10",
+   "est_pass": null,
+   "day": 1,
+   "lat": 23.69144,
+   "lon": 86.97515
+  },
+  {
+   "code": "DHN",
+   "kind": "halt",
+   "name_en": "Dhanbad Jn",
+   "slug": "dhn",
+   "ink": "#26285e",
+   "has_art": true,
+   "state": "Jharkhand",
+   "district": "Dhanbad",
+   "elev_m": 235,
+   "names": {
+    "hi": "धनबाद"
+   },
+   "board_langs": [
+    "hi",
+    "en"
+   ],
+   "board_verified": false,
+   "speciality": {
+    "label": "Coal capital",
+    "line": "Dhanbad sits on the Jharia coalfield, the country’s main source of coking coal.",
+    "osop": false
+   },
+   "fact": "Jharkhand’s largest station, with over 100 trains a day.",
+   "src": [
+    "https://en.wikipedia.org/wiki/Dhanbad_Junction_railway_station",
+    "https://erail.in/train-enquiry/12313"
+   ],
+   "vignette": null,
+   "km": 266,
+   "arr": "20:20",
+   "dep": "20:25",
+   "est_pass": null,
+   "day": 1,
+   "lat": 23.79097,
+   "lon": 86.42896
+  },
+  {
+   "code": "PNME",
+   "kind": "pass",
+   "name_en": "Parasnath",
+   "slug": "pnme",
+   "ink": "#26285e",
+   "has_art": true,
+   "state": "Jharkhand",
+   "district": "Giridih",
+   "elev_m": 278,
+   "names": {
+    "hi": "पारसनाथ"
+   },
+   "board_langs": [
+    "hi",
+    "en"
+   ],
+   "board_verified": false,
+   "speciality": {
+    "label": "Shikharji",
+    "line": "Parasnath Hill, 1,365 m, is Jharkhand’s highest peak and a major Jain pilgrimage.",
+    "osop": false
+   },
+   "fact": "The station opened in 1906 with the Grand Chord.",
+   "src": [
+    "https://en.wikipedia.org/wiki/Parasnath_railway_station",
+    "https://github.com/datameet/railways"
+   ],
+   "vignette": null,
+   "km": 311,
+   "arr": null,
+   "dep": null,
+   "est_pass": "21:01",
+   "day": 1,
+   "lat": 23.98797,
+   "lon": 86.03786
+  },
+  {
+   "code": "KQR",
+   "kind": "pass",
+   "name_en": "Koderma Jn",
+   "slug": "kqr",
+   "ink": "#26285e",
+   "has_art": true,
+   "state": "Jharkhand",
+   "district": "Koderma",
+   "elev_m": 398,
+   "names": {
+    "hi": "कोडरमा"
+   },
+   "board_langs": [
+    "hi",
+    "en"
+   ],
+   "board_verified": false,
+   "speciality": {
+    "label": "Top of the line",
+    "line": "At 398 m this is the highest point of your ride. From here the line drops through forested hills to Gaya.",
+    "osop": false
+   },
+   "fact": "The Grand Chord through here opened in 1906.",
+   "src": [
+    "https://en.wikipedia.org/wiki/Koderma_Junction_railway_station",
+    "https://github.com/datameet/railways"
+   ],
+   "vignette": null,
+   "km": 396,
+   "arr": null,
+   "dep": null,
+   "est_pass": "22:01",
+   "day": 1,
+   "lat": 24.43474,
+   "lon": 85.52946
+  },
+  {
+   "code": "GAYA",
+   "kind": "halt",
+   "name_en": "Gaya Jn",
+   "slug": "gaya",
+   "ink": "#26285e",
+   "has_art": true,
+   "state": "Bihar",
+   "district": "Gaya",
+   "elev_m": 117,
+   "names": {
+    "hi": "गया",
+    "ur": "گیا"
+   },
+   "board_langs": [
+    "hi",
+    "en",
+    "ur"
+   ],
+   "board_verified": false,
+   "speciality": {
+    "label": "Gateway to Bodh Gaya",
+    "line": "The railhead for Bodh Gaya, where the Mahabodhi Temple marks the Buddha’s enlightenment.",
+    "osop": false
+   },
+   "fact": "The Grand Chord through Gaya was opened in 1906 by the Viceroy, Lord Minto.",
+   "src": [
+    "https://en.wikipedia.org/wiki/Gaya_Junction_railway_station",
+    "https://erail.in/train-enquiry/12313"
+   ],
+   "vignette": null,
+   "km": 464,
+   "arr": "22:57",
+   "dep": "23:00",
+   "est_pass": null,
+   "day": 1,
+   "lat": 24.80398,
+   "lon": 84.99929
+  },
+  {
+   "code": null,
+   "kind": "pass",
+   "name_en": "Son Bridge",
+   "slug": "son",
+   "ink": "#26285e",
+   "has_art": true,
+   "state": "Bihar",
+   "district": "Rohtas",
+   "elev_m": null,
+   "names": {},
+   "board_langs": [
+    "hi",
+    "en",
+    "ur"
+   ],
+   "board_verified": false,
+   "speciality": {
+    "label": "Nehru Setu",
+    "line": "About 3 km of girders over the Son at Dehri, opened in 1900. India’s second-longest rail bridge.",
+    "osop": false
+   },
+   "fact": null,
+   "src": [
+    "https://en.wikipedia.org/wiki/Nehru_Setu",
+    "https://github.com/datameet/railways"
+   ],
+   "vignette": null,
+   "km": 546,
+   "arr": null,
+   "dep": null,
+   "est_pass": "23:55",
+   "day": 1,
+   "lat": 24.89855,
+   "lon": 84.20735
+  },
+  {
+   "code": "SSM",
+   "kind": "pass",
+   "name_en": "Sasaram",
+   "slug": "ssm",
+   "ink": "#26285e",
+   "has_art": true,
+   "state": "Bihar",
+   "district": "Rohtas",
+   "elev_m": 108,
+   "names": {
+    "hi": "सासाराम"
+   },
+   "board_langs": [
+    "hi",
+    "en",
+    "ur"
+   ],
+   "board_verified": false,
+   "speciality": {
+    "label": "Sher Shah Suri’s tomb",
+    "line": "The emperor’s sandstone mausoleum stands in the middle of a lake in the town.",
+    "osop": false
+   },
+   "fact": "The station opened in 1885.",
+   "src": [
+    "https://en.wikipedia.org/wiki/Sasaram_Junction_railway_station",
+    "https://github.com/datameet/railways"
+   ],
+   "vignette": null,
+   "km": 566,
+   "arr": null,
+   "dep": null,
+   "est_pass": "00:07",
+   "day": 2,
+   "lat": 24.95593,
+   "lon": 84.01942
+  },
+  {
+   "code": "DDU",
+   "kind": "halt",
+   "name_en": "Pt. DD Upadhyaya Jn",
+   "slug": "ddu",
+   "ink": "#26285e",
+   "has_art": true,
+   "state": "Uttar Pradesh",
+   "district": "Chandauli",
+   "elev_m": 79,
+   "names": {
+    "hi": "पं. दीन दयाल उपाध्याय जं."
+   },
+   "board_langs": [
+    "hi",
+    "en",
+    "ur"
+   ],
+   "board_verified": false,
+   "speciality": {
+    "label": "Asia’s largest yard",
+    "line": "Home to Asia’s largest marshalling yard. Every train stops here, Rajdhanis included.",
+    "osop": false
+   },
+   "fact": "It was Mughalsarai Junction until June 2018.",
+   "src": [
+    "https://en.wikipedia.org/wiki/Pt._Deen_Dayal_Upadhyaya_Junction_railway_station",
+    "https://erail.in/train-enquiry/12313"
+   ],
+   "vignette": null,
+   "km": 667,
+   "arr": "01:13",
+   "dep": "01:20",
+   "est_pass": null,
+   "day": 2,
+   "lat": 25.27815,
+   "lon": 83.11925
+  },
+  {
+   "code": "CAR",
+   "kind": "pass",
+   "name_en": "Chunar",
+   "slug": "car",
+   "ink": "#26285e",
+   "has_art": true,
+   "state": "Uttar Pradesh",
+   "district": "Mirzapur",
+   "elev_m": null,
+   "names": {
+    "hi": "चुनार"
+   },
+   "board_langs": [
+    "hi",
+    "en",
+    "ur"
+   ],
+   "board_verified": false,
+   "speciality": {
+    "label": "Chunar Fort",
+    "line": "A sandstone fort on a rock above the Ganga. Akbar took it in 1575.",
+    "osop": false
+   },
+   "fact": null,
+   "src": [
+    "https://en.wikipedia.org/wiki/Chunar_Fort",
+    "https://github.com/datameet/railways"
+   ],
+   "vignette": null,
+   "km": 699,
+   "arr": null,
+   "dep": null,
+   "est_pass": "01:41",
+   "day": 2,
+   "lat": 25.10335,
+   "lon": 82.8747
+  },
+  {
+   "code": "PRYJ",
+   "kind": "pass",
+   "name_en": "Prayagraj Jn",
+   "slug": "pryj",
+   "ink": "#26285e",
+   "has_art": true,
+   "state": "Uttar Pradesh",
+   "district": "Prayagraj",
+   "elev_m": null,
+   "names": {
+    "hi": "प्रयागराज"
+   },
+   "board_langs": [
+    "hi",
+    "en",
+    "ur"
+   ],
+   "board_verified": false,
+   "speciality": {
+    "label": "Old Naini Bridge",
+    "line": "You cross the Yamuna on a double-deck truss bridge finished in 1865: trains above, road below.",
+    "osop": false
+   },
+   "fact": "The first train from here ran to Kanpur in 1859.",
+   "src": [
+    "https://en.wikipedia.org/wiki/Prayagraj_Junction_railway_station",
+    "https://en.wikipedia.org/wiki/Old_Naini_Bridge",
+    "https://github.com/datameet/railways"
+   ],
+   "vignette": null,
+   "km": 820,
+   "arr": null,
+   "dep": null,
+   "est_pass": "03:04",
+   "day": 2,
+   "lat": 25.44624,
+   "lon": 81.82882
+  },
+  {
+   "code": "CNB",
+   "kind": "halt",
+   "name_en": "Kanpur Central",
+   "slug": "cnb",
+   "ink": "#26285e",
+   "has_art": true,
+   "state": "Uttar Pradesh",
+   "district": "Kanpur Nagar",
+   "elev_m": 127,
+   "names": {
+    "hi": "कानपुर सेंट्रल",
+    "ur": "کانپور سنٹرل"
+   },
+   "board_langs": [
+    "hi",
+    "en",
+    "ur"
+   ],
+   "board_verified": false,
+   "speciality": {
+    "label": "Mill city",
+    "line": "Kanpur grew up on textile mills and leather.",
+    "osop": false
+   },
+   "fact": "India’s third-busiest station, after Howrah and New Delhi.",
+   "src": [
+    "https://en.wikipedia.org/wiki/Kanpur_Central_railway_station",
+    "https://erail.in/train-enquiry/12313"
+   ],
+   "vignette": null,
+   "km": 1015,
+   "arr": "05:15",
+   "dep": "05:20",
+   "est_pass": null,
+   "day": 2,
+   "lat": 26.45424,
+   "lon": 80.35097
+  },
+  {
+   "code": "ETW",
+   "kind": "pass",
+   "name_en": "Etawah",
+   "slug": "etw",
+   "ink": "#6b3f22",
+   "has_art": true,
+   "state": "Uttar Pradesh",
+   "district": "Etawah",
+   "elev_m": 154,
+   "names": {
+    "hi": "इटावा"
+   },
+   "board_langs": [
+    "hi",
+    "en",
+    "ur"
+   ],
+   "board_verified": false,
+   "speciality": {
+    "label": "Sarus crane country",
+    "line": "Sarsai Nawar wetland in this district is a Ramsar site kept for sarus cranes.",
+    "osop": false
+   },
+   "fact": "Etawah lies near where the Chambal meets the Yamuna.",
+   "src": [
+    "https://en.wikipedia.org/wiki/Etawah_Junction_railway_station",
+    "https://en.wikipedia.org/wiki/Sarsai_Nawar_Wetland",
+    "https://github.com/datameet/railways"
+   ],
+   "vignette": null,
+   "km": 1155,
+   "arr": null,
+   "dep": null,
+   "est_pass": "07:06",
+   "day": 2,
+   "lat": 26.78597,
+   "lon": 79.0215
+  },
+  {
+   "code": "FZD",
+   "kind": "pass",
+   "name_en": "Firozabad",
+   "slug": "fzd",
+   "ink": "#1f4d3a",
+   "has_art": true,
+   "state": "Uttar Pradesh",
+   "district": "Firozabad",
+   "elev_m": 163,
+   "names": {
+    "hi": "फ़िरोज़ाबाद"
+   },
+   "board_langs": [
+    "hi",
+    "en",
+    "ur"
+   ],
+   "board_verified": false,
+   "speciality": {
+    "label": "Glass bangles",
+    "line": "Firozabad is India’s glass town, best known for bangles.",
+    "osop": false
+   },
+   "fact": "The station opened in 1865–66.",
+   "src": [
+    "https://en.wikipedia.org/wiki/Firozabad_railway_station",
+    "https://github.com/datameet/railways"
+   ],
+   "vignette": null,
+   "km": 1230,
+   "arr": null,
+   "dep": null,
+   "est_pass": "08:03",
+   "day": 2,
+   "lat": 27.14741,
+   "lon": 78.38669
+  },
+  {
+   "code": "ALJN",
+   "kind": "pass",
+   "name_en": "Aligarh Jn",
+   "slug": "aljn",
+   "ink": "#1f4d3a",
+   "has_art": true,
+   "state": "Uttar Pradesh",
+   "district": "Aligarh",
+   "elev_m": 193,
+   "names": {
+    "hi": "अलीगढ़",
+    "ur": "علی گڑھ"
+   },
+   "board_langs": [
+    "hi",
+    "en",
+    "ur"
+   ],
+   "board_verified": false,
+   "speciality": {
+    "label": "Locks",
+    "line": "Aligarh’s workshops are known across India for brass padlocks.",
+    "osop": false
+   },
+   "fact": "Trains have run through here since 1866.",
+   "src": [
+    "https://en.wikipedia.org/wiki/Aligarh_Junction_railway_station",
+    "https://github.com/datameet/railways"
+   ],
+   "vignette": null,
+   "km": 1325,
+   "arr": null,
+   "dep": null,
+   "est_pass": "09:15",
+   "day": 2,
+   "lat": 27.88958,
+   "lon": 78.07456
+  },
+  {
+   "code": "NDLS",
+   "kind": "halt",
+   "name_en": "New Delhi",
+   "slug": "ndls",
+   "ink": "#1f4d3a",
+   "has_art": true,
+   "state": "Delhi",
+   "district": "Central Delhi",
+   "elev_m": 214,
+   "names": {
+    "hi": "नई दिल्ली",
+    "pa": "ਨਵੀਂ ਦਿੱਲੀ",
+    "ur": "نئی دہلی"
+   },
+   "board_langs": [
+    "hi",
+    "en",
+    "pa",
+    "ur"
+   ],
+   "board_verified": false,
+   "speciality": {
+    "label": "Journey’s end",
+    "line": "Sixteen platforms and more than 250 passenger trains a day.",
+    "osop": false
+   },
+   "fact": "Its route relay interlocking is listed by Guinness as the world’s largest.",
+   "src": [
+    "https://en.wikipedia.org/wiki/New_Delhi_railway_station",
+    "https://erail.in/train-enquiry/12313"
+   ],
+   "vignette": null,
+   "km": 1455,
+   "arr": "10:50",
+   "dep": null,
+   "est_pass": null,
+   "day": 2,
+   "lat": 28.64231,
+   "lon": 77.22
+  }
+ ],
+ "rivers": [
+  {
+   "name": "Barakar",
+   "between": [
+    "ASN",
+    "DHN"
+   ],
+   "km_approx": 226,
+   "bridge": null,
+   "note": "The river is the West Bengal–Jharkhand border here.",
+   "src": [
+    "https://github.com/datameet/railways"
+   ]
+  },
+  {
+   "name": "Son",
+   "between": [
+    "GAYA",
+    "DDU"
+   ],
+   "km_approx": 546,
+   "bridge": "Nehru Setu",
+   "note": "About 3 km long, opened in 1900.",
+   "src": [
+    "https://en.wikipedia.org/wiki/Nehru_Setu"
+   ]
+  },
+  {
+   "name": "Karmanasa",
+   "between": [
+    "GAYA",
+    "DDU"
+   ],
+   "km_approx": 636,
+   "bridge": null,
+   "note": "The river is the Bihar–Uttar Pradesh border here.",
+   "src": [
+    "https://github.com/datameet/railways"
+   ]
+  },
+  {
+   "name": "Yamuna",
+   "between": [
+    "DDU",
+    "CNB"
+   ],
+   "km_approx": 816,
+   "bridge": "Old Naini Bridge",
+   "note": "Double-deck truss bridge finished in 1865.",
+   "src": [
+    "https://en.wikipedia.org/wiki/Old_Naini_Bridge"
+   ]
+  },
+  {
+   "name": "Yamuna",
+   "between": [
+    "CNB",
+    "NDLS"
+   ],
+   "km_approx": 1448,
+   "bridge": null,
+   "note": "Crossed again on the way into New Delhi.",
+   "src": [
+    "https://github.com/datameet/railways"
+   ]
+  }
+ ],
+ "borders": [
+  {
+   "from": "West Bengal",
+   "to": "Jharkhand",
+   "near": "Barakar",
+   "km_approx": 226,
+   "est_time": "19:32",
+   "src": [
+    "https://github.com/datameet/railways"
+   ]
+  },
+  {
+   "from": "Jharkhand",
+   "to": "Bihar",
+   "near": "Gurpa",
+   "km_approx": 417,
+   "est_time": "22:20",
+   "src": [
+    "https://github.com/datameet/railways"
+   ]
+  },
+  {
+   "from": "Bihar",
+   "to": "Uttar Pradesh",
+   "near": "Karmnasa",
+   "km_approx": 636,
+   "est_time": "00:54",
+   "src": [
+    "https://github.com/datameet/railways"
+   ]
+  },
+  {
+   "from": "Uttar Pradesh",
+   "to": "Delhi",
+   "near": "Sahibabad",
+   "km_approx": 1440,
+   "est_time": "10:43",
+   "src": [
+    "https://github.com/datameet/railways"
+   ]
+  }
+ ],
+ "sun": {
+  "sunset_17": {
+   "time": "16:55",
+   "at": "Asansol"
+  },
+  "sunrise_18": {
+   "time": "06:34",
+   "near": "Pata",
+   "km": 1108
+  },
+  "km_in_darkness": 901,
+  "moon": {
+   "phase_name": "First quarter",
+   "illumination_pct": 46
+  }
+ },
+ "notes": [
+  "Halt times are the current timetable (erail.in).",
+  "Times and distances for pass-through places are estimates, scaled from an open 2016 timetable and station coordinates.",
+  "Station names in Indian scripts were typed by hand and board languages are the usual ones for each state, not checked against photos of each board."
+ ]
+}
