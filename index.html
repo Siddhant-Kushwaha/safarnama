@@ -48,9 +48,9 @@ button{font:inherit;color:inherit}
 .btn{min-height:44px;padding:0 14px;border:1px solid var(--rule);background:var(--page-2);border-radius:6px;cursor:pointer;font-size:13px}
 
 /* ---- hero ---- */
-#hero{position:relative;max-width:460px;margin:0 auto;padding:22px 16px 0;overflow:hidden;background:linear-gradient(180deg,#191322 0,#2f2140 46%,#3b2647 100%)}
+#hero{position:relative;padding:22px 0 0;overflow:hidden;background:linear-gradient(180deg,#191322 0,#2f2140 46%,#3b2647 100%)}
 #hero .stars{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-#hero > *{position:relative}
+#hero > *,#hero > .col > *{position:relative}
 .eyebrow{font-family:var(--font-data);font-size:11px;letter-spacing:.1em;color:var(--board);margin:0 0 12px}
 .flaps{margin:0;display:flex;flex-direction:column;gap:6px;font-size:0}
 .flaps .row{display:flex;gap:3px}
@@ -72,7 +72,7 @@ button{font:inherit;color:inherit}
 .hero-cta{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
 .cta{min-height:48px;padding:0 18px;border-radius:8px;border:2px solid var(--board-ink);background:var(--board);color:var(--board-ink);font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.4)}
 .cta.ghost{background:transparent;color:var(--text);border-color:var(--text);box-shadow:none}
-.hero-rail{position:relative;height:74px;margin:18px -16px 0;overflow:hidden}
+.hero-rail{position:relative;height:74px;margin:18px 0 0;overflow:hidden}
 .hero-rail::after{content:"";position:absolute;left:0;right:0;bottom:9px;height:3px;background:#cfc8b8;box-shadow:0 5px 0 -1px rgba(207,200,184,.35)}
 #hero-train{position:absolute;bottom:11px;left:0;height:46px;width:auto;transform:translateX(110vw)}
 
@@ -83,7 +83,8 @@ button{font:inherit;color:inherit}
 
 /* ---- journey ---- */
 #journey{position:relative;margin:0 auto;max-width:460px;border-bottom:6px solid var(--board)}
-#sky{position:absolute;inset:0;z-index:0}
+#sky{position:absolute;top:0;bottom:0;left:50%;width:100vw;margin-left:-50vw;z-index:0}
+@media (min-width:700px){#sky::after{content:"";position:absolute;left:0;right:0;top:0;height:var(--night,0px);opacity:.55;background-image:radial-gradient(#fff 1px,transparent 1.5px),radial-gradient(#fff .8px,transparent 1.3px),radial-gradient(#fff 1.2px,transparent 1.7px);background-size:173px 131px,97px 211px,311px 257px;background-position:20px 30px,60px 110px,150px 70px;-webkit-mask:linear-gradient(#000 calc(100% - 420px),transparent);mask:linear-gradient(#000 calc(100% - 420px),transparent)}}
 #stage{position:relative;z-index:1;margin:0 16px}
 #track{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
 #train-g{pointer-events:auto;cursor:pointer}
@@ -169,14 +170,14 @@ details.src a{color:var(--text)}
 #win.dawn{background:#e9a56a;--far:#b9735c;--mid:#5a3b3f;--near:#2a1c22}
 #win.day{background:#cfe3ea;--far:#a4c4b3;--mid:#5d8a66;--near:#2a3831}
 #win .in{position:relative;max-width:460px;height:100%;margin:0 auto}
-.lay{position:absolute;left:0;bottom:0;width:calc(100% + 480px);will-change:transform;transition:background-color .7s}
+.lay{position:absolute;left:50%;margin-left:-50vw;bottom:0;width:calc(100vw + 480px);will-change:transform;transition:background-color .7s}
 .lay.far{height:58px;background:var(--far);-webkit-mask:var(--m-far) 0 100%/240px 58px repeat-x;mask:var(--m-far) 0 100%/240px 58px repeat-x}
 .lay.mid{height:46px;background:var(--mid);-webkit-mask:var(--m-mid) 0 100%/200px 46px repeat-x;mask:var(--m-mid) 0 100%/200px 46px repeat-x}
 .lay.near{height:96px;background:var(--near);-webkit-mask:var(--m-near) 0 100%/150px 96px repeat-x;mask:var(--m-near) 0 100%/150px 96px repeat-x}
-.lay.gnd{height:9px;width:100%;background:var(--near)}
-#win .wstars{position:absolute;inset:0;background-image:radial-gradient(#fff 1px,transparent 1.4px),radial-gradient(#fff 1px,transparent 1.2px);background-size:90px 44px,130px 60px;background-position:10px 6px,60px 22px;opacity:.7;transition:opacity .7s}
+.lay.gnd{height:9px;width:100vw;background:var(--near)}
+#win .wstars{position:absolute;top:0;bottom:0;left:50%;margin-left:-50vw;width:100vw;background-image:radial-gradient(#fff 1px,transparent 1.4px),radial-gradient(#fff 1px,transparent 1.2px);background-size:90px 44px,130px 60px;background-position:10px 6px,60px 22px;opacity:.7;transition:opacity .7s}
 #win.dawn .wstars,#win.day .wstars{opacity:0}
-.wboard{position:absolute;left:0;bottom:9px;will-change:transform;transform:translateX(-400px);background:var(--board);color:var(--board-ink);border:2px solid var(--board-ink);border-radius:3px;padding:2px 9px 3px;text-align:center;white-space:nowrap;margin-bottom:22px}
+.wboard{position:absolute;left:0;bottom:9px;will-change:transform;transform:translateX(-9999px);background:var(--board);color:var(--board-ink);border:2px solid var(--board-ink);border-radius:3px;padding:2px 9px 3px;text-align:center;white-space:nowrap;margin-bottom:22px}
 .wboard::before,.wboard::after{content:"";position:absolute;top:100%;width:3px;height:24px;background:var(--board-ink)}
 .wboard::before{left:14px}.wboard::after{right:14px}
 .wboard b{display:block;font-family:var(--font-display);font-weight:700;font-size:15px;line-height:1.1;letter-spacing:.04em;text-transform:uppercase}
@@ -288,6 +289,7 @@ details.src a{color:var(--text)}
 <body>
 <header id="hero">
   <svg class="stars" id="hero-stars" aria-hidden="true"></svg>
+  <div class="col">
   <p class="eyebrow" id="h-eyebrow"></p>
   <h1 class="flaps" id="flaps"></h1>
   <p class="hero-date" id="h-date"></p>
@@ -297,6 +299,7 @@ details.src a{color:var(--text)}
   <div class="hero-cta">
     <button class="cta" id="ride" type="button">Ride the journey</button>
     <button class="cta ghost" id="tonow" type="button" hidden>Where am I now</button>
+  </div>
   </div>
   <div class="hero-rail" aria-hidden="true"><svg id="hero-train" viewBox="0 0 830 46"></svg></div>
 </header>
@@ -489,7 +492,9 @@ const stage=$('stage'),track=$('track'),journey=$('journey');
 (function hero(){
   $('h-eyebrow').textContent=(R.train.number+' · '+R.train.name).toUpperCase();
   $('h-date').textContent=dates.toUpperCase()+' · DEP '+fmt(T0)+' · ARR '+fmt(T1);
-  let st='';for(let k=0;k<70;k++)st+='<circle '+(k%3===0?'class="tw" style="animation-delay:-'+(k*0.41%3.4).toFixed(2)+'s" ':'')+'cx="'+(hash('x'+k)*100).toFixed(1)+'%" cy="'+(hash('y'+k)*62).toFixed(1)+'%" r="'+(0.5+hash('r'+k)*0.9).toFixed(2)+'" fill="#fff" opacity="'+(0.3+hash('o'+k)*0.6).toFixed(2)+'"/>';
+  /* short keys need a final mix or the stars bunch up in one corner */
+  const hs=s=>{let h=hash(s)*4294967296>>>0;h^=h>>>16;h=Math.imul(h,0x85ebca6b);h^=h>>>13;h=Math.imul(h,0xc2b2ae35);h^=h>>>16;return (h>>>0)/4294967296;};
+  let st='';for(let k=0;k<70;k++)st+='<circle '+(k%3===0?'class="tw" style="animation-delay:-'+(k*0.41%3.4).toFixed(2)+'s" ':'')+'cx="'+(hs('x'+k)*100).toFixed(1)+'%" cy="'+(hs('y'+k)*62).toFixed(1)+'%" r="'+(0.5+hs('r'+k)*0.9).toFixed(2)+'" fill="#fff" opacity="'+(0.3+hs('o'+k)*0.6).toFixed(2)+'"/>';
   $('hero-stars').innerHTML=st;
   /* split-flap title */
   const A=short(P[0]).toUpperCase(),B=short(last).toUpperCase(),fl=$('flaps'),W=Math.min(428,fl.clientWidth||340);
@@ -611,7 +616,7 @@ const win=$('win');
 const wb=[].slice.call($('wboards').children).map(el=>({el,w:0,x:-9999})),lay={far:$('l-far'),mid:$('l-mid'),near:$('l-near')};
 
 /* ---- layout ---- */
-let L=null,VH=window.innerHeight,stageTop=0;
+let L=null,VH=window.innerHeight,VW=window.innerWidth,stageTop=0;
 const SKY=[[T0-30,'#3b2647'],[T0+25,'#2a2140'],[T0+80,'#121628'],[SR-100,'#0e1122'],[SR-55,'#232a4d'],[SR-24,'#5a4766'],[SR-7,'#d98a5f'],[SR+9,'#f0c383'],[SR+45,'#cfe0e6'],[T1+30,'#e1ebee']];
 function yOf(t){
   if(t<=P[0].td)return L.ny[0]-(P[0].td-t)*1.2;
@@ -639,6 +644,7 @@ function layout(){
   marks.forEach(m=>{const day=m.type==='sun'||m.y>dayY;m.el.classList.toggle('on-day',day);m.el.classList.toggle('on-night',!day);});
   let prev=0;
   $('sky').style.background='linear-gradient(180deg,'+['#3b2647 0px'].concat(SKY.map(([t,c])=>{prev=Math.max(prev+1,Math.min(H,Math.max(30,yOf(t))));return c+' '+Math.round(prev)+'px';})).join(',')+')';
+  $('sky').style.setProperty('--night',Math.round(yOf(SR-45))+'px');
 
   /* sample the line once: everything that moves reads this table, not the DOM */
   const PX=[],PY=[],PL=[],nodeLen=[],LEAD=140,S=30;
@@ -685,7 +691,7 @@ function layout(){
     '<g id="train-g"><g class="car">'+coach+'</g><g class="car">'+coach+'</g><g class="car">'+coach+'</g><g class="car">'+coach+'</g>'+
     '<g class="car"><g id="loco"><path id="beam" d="M12 -3 L64 -19 L64 19 L12 3 Z" fill="#f6c81e" opacity=".3"/><rect x="-13" y="-6.500" width="26" height="13" rx="3" fill="#d8452b" stroke="#141414" stroke-width="1.3"/><rect x="5" y="-6.500" width="3" height="13" fill="#f3e9d2"/><path d="M10 -4v8" stroke="#141414" stroke-width="2" stroke-linecap="round"/><path d="M-6 -3l5 3l-5 3" fill="none" stroke="#141414" stroke-width="1"/></g></g></g>';
   L.prog=track.querySelector('#prog');L.cars=[].slice.call(track.querySelectorAll('.car')).reverse();L.beam=track.querySelector('#beam');L.tg=track.querySelector('#train-g');
-  stageTop=stage.getBoundingClientRect().top+window.scrollY;VH=window.innerHeight;
+  stageTop=stage.getBoundingClientRect().top+window.scrollY;VH=window.innerHeight;VW=window.innerWidth;
   wb.forEach(b=>{b.w=b.el.offsetWidth;b.x=-9999;});
   stamps.forEach(s=>{s.tf='?';});
 }
@@ -753,7 +759,7 @@ function ride(){
     lay.near.style.transform='translate3d('+(-(sc*0.9%150)).toFixed(1)+'px,0,0)';
   }
   const cx=Math.min(L.W+32,460)/2;
-  wb.forEach((w,i)=>{const dx=(L.nodeLen[i]-len)*1.5,x=Math.abs(dx)>cx+200||y<y0-VH*0.2?-9999:Math.round(cx+dx-w.w/2);
+  wb.forEach((w,i)=>{const dx=(L.nodeLen[i]-len)*1.5,x=Math.abs(dx)>VW/2+200||y<y0-VH*0.2?-9999:Math.round(cx+dx-w.w/2);
     if(x!==w.x){w.x=x;w.el.style.transform='translate3d('+x+'px,0,0)';}});
   /* the rail tick keeps time with how fast you scroll */
   if(ready&&y>y0&&!atEnd){acc+=Math.abs(sc-lastSc);const now=performance.now();if(acc>95&&now-lastClack>100){acc=0;lastClack=now;sfx.clack();}}

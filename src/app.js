@@ -125,7 +125,9 @@ const stage=$('stage'),track=$('track'),journey=$('journey');
 (function hero(){
   $('h-eyebrow').textContent=(R.train.number+' · '+R.train.name).toUpperCase();
   $('h-date').textContent=dates.toUpperCase()+' · DEP '+fmt(T0)+' · ARR '+fmt(T1);
-  let st='';for(let k=0;k<70;k++)st+='<circle '+(k%3===0?'class="tw" style="animation-delay:-'+(k*0.41%3.4).toFixed(2)+'s" ':'')+'cx="'+(hash('x'+k)*100).toFixed(1)+'%" cy="'+(hash('y'+k)*62).toFixed(1)+'%" r="'+(0.5+hash('r'+k)*0.9).toFixed(2)+'" fill="#fff" opacity="'+(0.3+hash('o'+k)*0.6).toFixed(2)+'"/>';
+  /* short keys need a final mix or the stars bunch up in one corner */
+  const hs=s=>{let h=hash(s)*4294967296>>>0;h^=h>>>16;h=Math.imul(h,0x85ebca6b);h^=h>>>13;h=Math.imul(h,0xc2b2ae35);h^=h>>>16;return (h>>>0)/4294967296;};
+  let st='';for(let k=0;k<70;k++)st+='<circle '+(k%3===0?'class="tw" style="animation-delay:-'+(k*0.41%3.4).toFixed(2)+'s" ':'')+'cx="'+(hs('x'+k)*100).toFixed(1)+'%" cy="'+(hs('y'+k)*62).toFixed(1)+'%" r="'+(0.5+hs('r'+k)*0.9).toFixed(2)+'" fill="#fff" opacity="'+(0.3+hs('o'+k)*0.6).toFixed(2)+'"/>';
   $('hero-stars').innerHTML=st;
   /* split-flap title */
   const A=short(P[0]).toUpperCase(),B=short(last).toUpperCase(),fl=$('flaps'),W=Math.min(428,fl.clientWidth||340);
@@ -247,7 +249,7 @@ const win=$('win');
 const wb=[].slice.call($('wboards').children).map(el=>({el,w:0,x:-9999})),lay={far:$('l-far'),mid:$('l-mid'),near:$('l-near')};
 
 /* ---- layout ---- */
-let L=null,VH=window.innerHeight,stageTop=0;
+let L=null,VH=window.innerHeight,VW=window.innerWidth,stageTop=0;
 const SKY=[[T0-30,'#3b2647'],[T0+25,'#2a2140'],[T0+80,'#121628'],[SR-100,'#0e1122'],[SR-55,'#232a4d'],[SR-24,'#5a4766'],[SR-7,'#d98a5f'],[SR+9,'#f0c383'],[SR+45,'#cfe0e6'],[T1+30,'#e1ebee']];
 function yOf(t){
   if(t<=P[0].td)return L.ny[0]-(P[0].td-t)*1.2;
@@ -275,6 +277,7 @@ function layout(){
   marks.forEach(m=>{const day=m.type==='sun'||m.y>dayY;m.el.classList.toggle('on-day',day);m.el.classList.toggle('on-night',!day);});
   let prev=0;
   $('sky').style.background='linear-gradient(180deg,'+['#3b2647 0px'].concat(SKY.map(([t,c])=>{prev=Math.max(prev+1,Math.min(H,Math.max(30,yOf(t))));return c+' '+Math.round(prev)+'px';})).join(',')+')';
+  $('sky').style.setProperty('--night',Math.round(yOf(SR-45))+'px');
 
   /* sample the line once: everything that moves reads this table, not the DOM */
   const PX=[],PY=[],PL=[],nodeLen=[],LEAD=140,S=30;
@@ -321,7 +324,7 @@ function layout(){
     '<g id="train-g"><g class="car">'+coach+'</g><g class="car">'+coach+'</g><g class="car">'+coach+'</g><g class="car">'+coach+'</g>'+
     '<g class="car"><g id="loco"><path id="beam" d="M12 -3 L64 -19 L64 19 L12 3 Z" fill="#f6c81e" opacity=".3"/><rect x="-13" y="-6.500" width="26" height="13" rx="3" fill="#d8452b" stroke="#141414" stroke-width="1.3"/><rect x="5" y="-6.500" width="3" height="13" fill="#f3e9d2"/><path d="M10 -4v8" stroke="#141414" stroke-width="2" stroke-linecap="round"/><path d="M-6 -3l5 3l-5 3" fill="none" stroke="#141414" stroke-width="1"/></g></g></g>';
   L.prog=track.querySelector('#prog');L.cars=[].slice.call(track.querySelectorAll('.car')).reverse();L.beam=track.querySelector('#beam');L.tg=track.querySelector('#train-g');
-  stageTop=stage.getBoundingClientRect().top+window.scrollY;VH=window.innerHeight;
+  stageTop=stage.getBoundingClientRect().top+window.scrollY;VH=window.innerHeight;VW=window.innerWidth;
   wb.forEach(b=>{b.w=b.el.offsetWidth;b.x=-9999;});
   stamps.forEach(s=>{s.tf='?';});
 }
@@ -389,7 +392,7 @@ function ride(){
     lay.near.style.transform='translate3d('+(-(sc*0.9%150)).toFixed(1)+'px,0,0)';
   }
   const cx=Math.min(L.W+32,460)/2;
-  wb.forEach((w,i)=>{const dx=(L.nodeLen[i]-len)*1.5,x=Math.abs(dx)>cx+200||y<y0-VH*0.2?-9999:Math.round(cx+dx-w.w/2);
+  wb.forEach((w,i)=>{const dx=(L.nodeLen[i]-len)*1.5,x=Math.abs(dx)>VW/2+200||y<y0-VH*0.2?-9999:Math.round(cx+dx-w.w/2);
     if(x!==w.x){w.x=x;w.el.style.transform='translate3d('+x+'px,0,0)';}});
   /* the rail tick keeps time with how fast you scroll */
   if(ready&&y>y0&&!atEnd){acc+=Math.abs(sc-lastSc);const now=performance.now();if(acc>95&&now-lastClack>100){acc=0;lastClack=now;sfx.clack();}}
