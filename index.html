@@ -220,6 +220,9 @@ body.gated #hero *{animation-play-state:paused!important}
 .g-chad{position:absolute;right:20px;bottom:14px;width:38px;height:38px;border-radius:50%;background:var(--paper);box-shadow:0 2px 4px rgba(0,0,0,.4);pointer-events:none}
 #gate.punched .g-punch{border-style:solid;background:#2c2040;box-shadow:inset 0 3px 7px rgba(0,0,0,.7);color:transparent}
 #gate.punched .g-punch::after{display:none}
+#gate.wait{cursor:progress}
+#gate.wait .g-punch::after{display:none}
+#gate.wait .g-hint{color:var(--text);opacity:.7}
 #gate.go{pointer-events:none}
 #gate.go .g-bg{opacity:0}
 #gate.go .g-stars,#gate.go .g-hint{opacity:0}
@@ -353,7 +356,7 @@ body.gated #hero *{animation-play-state:paused!important}
 </style>
 </head>
 <body class="gated">
-<div id="gate" role="button" tabindex="0" aria-label="Tap to board">
+<div id="gate" class="wait" role="button" tabindex="0" aria-label="Tap to board">
   <div class="g-bg"></div>
   <div class="g-stars"></div>
   <svg class="g-moon" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#3c3052"/><path d="M20 2a18 18 0 0 1 0 36z" fill="#f3e9d2"/></svg>
@@ -370,7 +373,7 @@ body.gated #hero *{animation-play-state:paused!important}
       <p class="g-meta" id="g-m2"></p>
       <div class="g-punch" aria-hidden="true">PUNCH</div>
     </div>
-    <p class="g-hint">Tap to board</p>
+    <p class="g-hint" id="g-hint">Loading stamps</p>
   </div>
 </div>
 <header id="hero">
@@ -596,7 +599,7 @@ let boot=()=>{};
   /* fan of stamps */
   const step=52/Math.max(1,N-1);
   const fan=$('fan'),hint=$('deckhint');
-  fan.innerHTML=P.map((p,i)=>'<button type="button" data-i="'+i+'" aria-label="'+esc(p.name_en)+'"><img alt="" width="96" height="128" src="'+(p.has_art!==false?'art/'+esc(p.slug)+'.webp':'')+'"></button>').join('');
+  fan.innerHTML=P.map((p,i)=>'<button type="button" data-i="'+i+'" aria-label="'+esc(p.name_en)+'"><img alt="" width="96" height="128" src="'+(p.has_art!==false?'art/t/'+esc(p.slug)+'.webp':'')+'"></button>').join('');
   const cards=[].slice.call(fan.children),ang=i=>(i-(N-1)/2)*step,jit=i=>hash('j'+i)*3-1.5,setA=(c,a)=>{c.style.transform='rotate('+a.toFixed(2)+'deg)';};
   let dealt=false,busy=false,phase=0,queued=false;
   const ready=()=>{dealt=true;busy=false;phase=4;fan.classList.add('dealt');hint.hidden=false;if(queued){queued=false;setTimeout(ripple,160);}};
@@ -1007,7 +1010,7 @@ if('IntersectionObserver' in window){
   }
   $('pc-k').textContent=R.train.number+' · '+dates.toUpperCase()+' · '+N+' STAMPS';
   $('pc-title').textContent=short(P[0])+' → '+short(last);
-  $('pc-grid').innerHTML=P.map((p,i)=>'<div class="mini" style="animation-delay:'+i*45+'ms"><img alt="" loading="lazy" width="96" height="128" src="'+(p.has_art!==false?'art/'+esc(p.slug)+'.webp':'')+'"><span>'+esc(short(p))+'</span><i></i></div>').join('');
+  $('pc-grid').innerHTML=P.map((p,i)=>'<div class="mini" style="animation-delay:'+i*45+'ms"><img alt="" loading="lazy" width="96" height="128" src="'+(p.has_art!==false?'art/t/'+esc(p.slug)+'.webp':'')+'"><span>'+esc(short(p))+'</span><i></i></div>').join('');
   const states=new Set(P.map(p=>p.state).filter(Boolean)).size,dark=R.sun&&R.sun.km_in_darkness;
   $('pc-stats').innerHTML=[[TOTAL.toLocaleString('en-IN'),'km'],[Math.floor(DUR/60)+'h '+String(DUR%60).padStart(2,'0'),'on the train'],[states,'states'],dark!=null?[dark,'km in the dark']:[(R.rivers||[]).length,'rivers']].map(s=>'<div><b>'+esc(s[0])+'</b><span>'+esc(s[1])+'</span></div>').join('');
   const urls=[];[P,R.rivers||[],R.borders||[]].forEach(list=>list.forEach(o=>(o.src||[]).forEach(u=>{if(urls.indexOf(u)<0)urls.push(u);})));
@@ -1031,13 +1034,20 @@ if('IntersectionObserver' in window){
   const spots=[[5,7,92,-10,0.7],[63,16,104,8,1],[31,20,68,-4,0.45],[-5,29,86,-14,0.8],[76,36,90,12,0.9],[-3,60,112,9,1.2],[69,59,118,-8,1.3],[33,67,76,5,0.55]];
   const pick=[0,4,6,13,10,1,14,9].map(i=>P[Math.min(i,N-1)]).filter(p=>p.has_art!==false);
   $('g-stamps').innerHTML=pick.map((p,i)=>{const s=spots[i%spots.length];
-    return '<img class="g-st'+(s[4]<0.6?' dim':'')+'" alt="" width="96" height="128" src="art/'+esc(p.slug)+'.webp" style="left:'+s[0]+'%;top:'+s[1]+'%;width:calc('+s[2]+'px*var(--gs));--r:'+s[3]+'deg;--t:'+(2.6+i*0.37).toFixed(2)+'s;--dl:'+(0.7+i*0.21).toFixed(2)+'s;animation-delay:'+(0.15+i*0.07).toFixed(2)+'s,'+(0.9+i*0.21).toFixed(2)+'s">';}).join('');
+    return '<img class="g-st'+(s[4]<0.6?' dim':'')+'" alt="" width="96" height="128" src="art/t/'+esc(p.slug)+'.webp" style="left:'+s[0]+'%;top:'+s[1]+'%;width:calc('+s[2]+'px*var(--gs));--r:'+s[3]+'deg;--t:'+(2.6+i*0.37).toFixed(2)+'s;--dl:'+(0.7+i*0.21).toFixed(2)+'s;animation-delay:'+(0.15+i*0.07).toFixed(2)+'s,'+(0.9+i*0.21).toFixed(2)+'s">';}).join('');
   const sts=[].slice.call(gate.querySelectorAll('.g-st'));
+  /* the ticket waits for the small stamp copies (3 s at most), then the full-size art loads quietly behind it */
+  let armed=false;
+  const arm=()=>{if(armed)return;armed=true;gate.classList.remove('wait');$('g-hint').textContent='Tap to board';
+    P.forEach((p,i)=>{if(p.has_art!==false&&p.slug)setTimeout(()=>{const im=new Image();im.decoding='async';im.src='art/'+p.slug+'.webp';},150+i*90);});};
+  const need=sts.concat([].slice.call(document.querySelectorAll('#fan img'))).filter(im=>!im.complete);let left=need.length;
+  if(!left)arm();else need.forEach(im=>{const done=()=>{if(--left<=0)arm();};im.addEventListener('load',done,{once:true});im.addEventListener('error',done,{once:true});});
+  setTimeout(arm,3000);
   let opened=false;
   const block=e=>{if(!opened)e.preventDefault();};
   gate.addEventListener('touchmove',block,{passive:false});gate.addEventListener('wheel',block,{passive:false});
   function open(){
-    if(opened)return;opened=true;unlock();gc.classList.remove('in');
+    if(opened||!armed)return;opened=true;unlock();gc.classList.remove('in');
     gate.classList.add('punched');sfx.thunk();hap(28);
     if(RM){gate.classList.add('go');boot();setTimeout(()=>gate.classList.add('gone'),320);return;}
     const chad=document.createElement('i');chad.className='g-chad';$('g-ticket').appendChild(chad);
