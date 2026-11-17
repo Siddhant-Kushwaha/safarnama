@@ -122,6 +122,7 @@ function countUp(b,delay){
 
 /* ---- hero ---- */
 const stage=$('stage'),track=$('track'),journey=$('journey');
+let boot=()=>{};
 (function hero(){
   $('h-eyebrow').textContent=(R.train.number+' · '+R.train.name).toUpperCase();
   $('h-date').textContent=dates.toUpperCase()+' · DEP '+fmt(T0)+' · ARR '+fmt(T1);
@@ -136,43 +137,61 @@ const stage=$('stage'),track=$('track'),journey=$('journey');
   fl.style.setProperty('--tw',tw+'px');
   const row=s=>'<span class="row" aria-hidden="true">'+s.split('').map(c=>c===' '?'<span class="tile sp"></span>':'<span class="tile" data-c="'+esc(c)+'">'+(RM?esc(c):'')+'</span>').join('')+'</span>';
   fl.innerHTML=row(A)+'<span class="to" aria-hidden="true">TO</span>'+row(B);
-  if(!RM){const AB='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const runFlaps=()=>{const AB='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     [].forEach.call(fl.querySelectorAll('.tile[data-c]'),(t,i)=>{let n=5+i;const iv=setInterval(()=>{
-      n--;t.textContent=n<=0?t.dataset.c:AB[Math.random()*26|0];t.classList.remove('tick');void t.offsetWidth;t.classList.add('tick');if(n<=0)clearInterval(iv);},62);});}
+      n--;t.textContent=n<=0?t.dataset.c:AB[Math.random()*26|0];t.classList.remove('tick');void t.offsetWidth;t.classList.add('tick');if(n<=0)clearInterval(iv);},62);});};
   /* fan of stamps */
   const step=52/Math.max(1,N-1);
   const fan=$('fan'),hint=$('deckhint');
   fan.innerHTML=P.map((p,i)=>'<button type="button" data-i="'+i+'" aria-label="'+esc(p.name_en)+'"><img alt="" width="96" height="128" src="'+(p.has_art!==false?'art/'+esc(p.slug)+'.webp':'')+'"></button>').join('');
   const cards=[].slice.call(fan.children),ang=i=>(i-(N-1)/2)*step,jit=i=>hash('j'+i)*3-1.5,setA=(c,a)=>{c.style.transform='rotate('+a.toFixed(2)+'deg)';};
-  let dealt=false,busy=false;
-  const ready=()=>{dealt=true;busy=false;fan.classList.add('dealt');hint.hidden=false;};
+  let dealt=false,busy=false,phase=0,queued=false;
+  const ready=()=>{dealt=true;busy=false;phase=4;fan.classList.add('dealt');hint.hidden=false;if(queued){queued=false;setTimeout(ripple,160);}};
   cards.forEach((c,i)=>{c.style.zIndex=N-i;setA(c,RM?ang(i):jit(i));if(RM)c.style.zIndex=i;});
   /* cut the deck, riffle it, deal the fan. Runs by itself on load; browsers only allow its sound and buzz once the page has been touched */
   function shuffle(){
-    if(busy)return;busy=true;unlock();
+    if(busy)return;busy=true;phase=1;unlock();
     setTimeout(()=>{hap(12);sfx.card(0);cards.forEach((c,i)=>setA(c,(i%2?17:-17)+jit(i)));},0);
+    setTimeout(()=>{phase=2;},380);
     setTimeout(()=>cards.forEach((c,i)=>setTimeout(()=>{setA(c,jit(i));sfx.card(i);hap(4);},i*42)),380);
+    setTimeout(()=>{phase=3;},380+N*42+260);
     setTimeout(()=>cards.forEach((c,i)=>setTimeout(()=>{c.style.zIndex=i;setA(c,ang(i));sfx.dealt(i);hap(6);if(i===N-1)setTimeout(ready,380);},i*62)),380+N*42+260);
   }
-  if(RM)ready();else setTimeout(shuffle,1250);
-  fan.addEventListener('click',e=>{const b=e.target.closest('button');if(b&&dealt&&!busy)jumpTo(+b.dataset.i);});
+  /* the opening shuffle is silent because browsers allow no sound or buzz before a touch; the first tap anywhere replays a short ripple of the fan with both */
+  let echoed=false,echoEnd=0;
+  function ripple(){
+    if(RM||!dealt||busy)return false;const r=fan.getBoundingClientRect();if(r.bottom<60||r.top>window.innerHeight-60)return false;
+    busy=true;unlock();fan.classList.add('fast');
+    cards.forEach((c,i)=>setTimeout(()=>{c.style.transform='rotate('+ang(i).toFixed(2)+'deg) translateY(-16px) scale(1.07)';sfx.dealt(i);hap(7);setTimeout(()=>setA(c,ang(i)),120);},i*46));
+    const d=N*46+240;setTimeout(()=>{fan.classList.remove('fast');busy=false;},d);echoEnd=performance.now()+d;return true;
+  }
+  /* a tap while the cards are still shuffling switches sound on for the rest of it; if only the tail was left, the ripple follows the deal */
+  document.addEventListener('click',e=>{
+    if(echoed)return;echoed=true;if(e.target.closest('#deckhint'))return;
+    if(!dealt){unlock();if(phase>=3)queued=true;return;}
+    ripple();
+  },true);
+  fan.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||!dealt)return;const i=+b.dataset.i,d=echoEnd-performance.now();if(d>0)setTimeout(()=>jumpTo(i),d);else if(!busy)jumpTo(i);});
   /* surprise me: a light runs to and fro across the laid-out cards, slows, and lands on one; the page then rides there and flips it */
   const lift=(i,on)=>{const c=cards[i];c.style.zIndex=on?99:i;c.style.transform='rotate('+ang(i).toFixed(2)+'deg)'+(on?' translateY(-20px) scale(1.14)':'');c.classList.toggle('hot',on);};
   hint.addEventListener('click',()=>{
-    if(busy||!dealt)return;busy=true;unlock();fan.classList.add('fast');fan.classList.remove('dealt');
+    if(busy||!dealt)return;busy=true;unlock();fan.classList.add('fast');
     const target=Math.random()*N|0,per=2*(N-1),pos=k=>{const m=k%per;return m<N?m:per-m;};
     let K=RM?0:22+(Math.random()*6|0),k=0,prev=-1;while(pos(K)!==target)K++;
     const step=()=>{
       const i=pos(k);if(prev>=0)lift(prev,false);lift(i,true);prev=i;
       if(k<K){sfx.pick(i);hap(5);k++;setTimeout(step,55+240*Math.pow(k/K,2.6));return;}
       sfx.chime();hap([18,40,30]);cards[i].classList.add('win');
-      setTimeout(()=>{cards[i].classList.remove('win');lift(i,false);fan.classList.remove('fast');fan.classList.add('dealt');busy=false;jumpTo(i,()=>openCard(i));},RM?0:950);
+      setTimeout(()=>{cards[i].classList.remove('win');lift(i,false);fan.classList.remove('fast');busy=false;jumpTo(i,()=>openCard(i));},RM?0:950);
     };
     step();
   });
   const states=new Set(P.map(p=>p.state).filter(Boolean)).size;
   $('h-stats').innerHTML=[[TOTAL.toLocaleString('en-IN'),'km'],[Math.floor(DUR/60)+'h'+String(DUR%60).padStart(2,'0'),'on the train'],[states,'states'],[N,'stamps']].map(s=>'<div><b>'+esc(s[0])+'</b><span>'+esc(s[1])+'</span></div>').join('');
-  [].forEach.call($('h-stats').querySelectorAll('b'),b=>countUp(b,2300));
+  /* nothing in the hero moves until the gate has been tapped: that tap is what lets the shuffle have sound and haptics */
+  boot=()=>{boot=()=>{};document.body.classList.remove('gated');
+    if(RM){ready();return;}
+    runFlaps();[].forEach.call($('h-stats').querySelectorAll('b'),b=>countUp(b,2300));setTimeout(shuffle,1250);};
   /* the train that passes */
   let t='<polygon points="4,25 -90,8 -90,42" fill="#f6c81e" opacity=".22"/><path d="M4 40V17q0-9 10-9h92v32z" fill="#d8452b" stroke="#141414" stroke-width="1.5"/><rect x="4" y="23" width="102" height="5" fill="#f3e9d2"/><rect x="10" y="12" width="15" height="8" rx="1" fill="#f6c81e" stroke="#141414"/><path d="M58 8l-9-7h22l-9 7" fill="none" stroke="#141414" stroke-width="1.5"/>';
   [20,36,78,94].forEach(x=>{t+='<circle cx="'+x+'" cy="41" r="4.5" fill="#141414"/>';});
@@ -541,6 +560,46 @@ if('IntersectionObserver' in window){
   const urls=[];[P,R.rivers||[],R.borders||[]].forEach(list=>list.forEach(o=>(o.src||[]).forEach(u=>{if(urls.indexOf(u)<0)urls.push(u);})));
   const host=u=>{try{return new URL(u).hostname.replace(/^www\./,'');}catch(e){return u;}};
   $('src-body').innerHTML=(R.notes||[]).map(n=>'<p>'+esc(n)+'</p>').join('')+'<ul>'+urls.map(u=>'<li><a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(host(u))+esc(decodeURIComponent(u.replace(/^https?:\/\/[^/]+/,'')).replace(/_/g,' ').slice(0,60))+'</a></li>').join('')+'</ul>';
+})();
+
+/* ---- boarding gate ---- */
+(function(){
+  const gate=$('gate');if(!gate){boot();return;}
+  /* one random star tile, shared by this screen and the sky beside the journey */
+  let sc='';for(let k=0;k<46;k++)sc+='<circle cx="'+(Math.random()*520).toFixed(1)+'" cy="'+(Math.random()*520).toFixed(1)+'" r="'+(0.5+Math.random()*0.9).toFixed(2)+'" fill="#fff" opacity="'+(0.3+Math.random()*0.65).toFixed(2)+'"/>';
+  document.documentElement.style.setProperty('--stars','url("data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="520" height="520">'+sc+'</svg>')+'")');
+  const gc=$('g-c');gc.addEventListener('animationend',e=>{if(e.target===gc)gc.classList.remove('in');});
+  ['--m-far','--m-mid','--m-near'].forEach(k=>gate.style.setProperty(k,win.style.getPropertyValue(k)));
+  $('g-k').textContent='Journey Stamps · '+R.train.number;
+  $('g-from').textContent=short(P[0]);$('g-to').textContent=short(last);
+  $('g-m1').textContent=dates.toUpperCase()+' · DEP '+fmt(T0);
+  $('g-m2').textContent=TOTAL.toLocaleString('en-IN')+' KM · '+N+' STAMPS';
+  /* stamps pinned around the ticket: x and y in percent of the screen, width in px, tilt, depth (bigger is nearer) */
+  const spots=[[5,7,92,-10,0.7],[63,16,104,8,1],[31,20,68,-4,0.45],[-5,29,86,-14,0.8],[76,36,90,12,0.9],[-3,60,112,9,1.2],[69,59,118,-8,1.3],[33,67,76,5,0.55]];
+  const pick=[0,4,6,13,10,1,14,9].map(i=>P[Math.min(i,N-1)]).filter(p=>p.has_art!==false);
+  $('g-stamps').innerHTML=pick.map((p,i)=>{const s=spots[i%spots.length];
+    return '<img class="g-st'+(s[4]<0.6?' dim':'')+'" alt="" width="96" height="128" src="art/'+esc(p.slug)+'.webp" style="left:'+s[0]+'%;top:'+s[1]+'%;width:calc('+s[2]+'px*var(--gs));--r:'+s[3]+'deg;--t:'+(2.6+i*0.37).toFixed(2)+'s;--dl:'+(0.7+i*0.21).toFixed(2)+'s;animation-delay:'+(0.15+i*0.07).toFixed(2)+'s,'+(0.9+i*0.21).toFixed(2)+'s">';}).join('');
+  const sts=[].slice.call(gate.querySelectorAll('.g-st'));
+  let opened=false;
+  const block=e=>{if(!opened)e.preventDefault();};
+  gate.addEventListener('touchmove',block,{passive:false});gate.addEventListener('wheel',block,{passive:false});
+  function open(){
+    if(opened)return;opened=true;unlock();gc.classList.remove('in');
+    gate.classList.add('punched');sfx.thunk();hap(28);
+    if(RM){gate.classList.add('go');boot();setTimeout(()=>gate.classList.add('gone'),320);return;}
+    const chad=document.createElement('i');chad.className='g-chad';$('g-ticket').appendChild(chad);
+    setTimeout(()=>{
+      gate.classList.add('go');
+      const cx=window.innerWidth/2,cy=window.innerHeight*0.43;
+      sts.forEach((el,i)=>{const s=spots[i%spots.length],r=el.getBoundingClientRect(),vx=r.left+r.width/2-cx,vy=r.top+r.height/2-cy,m=Math.hypot(vx,vy)||1,far=(520+760*s[4])*(window.innerWidth>700?1.6:1);
+        el.style.setProperty('--o',(1.15-0.38*s[4]).toFixed(2)+'s');el.classList.add('out');
+        setTimeout(()=>{el.style.transform='translate3d('+(vx/m*far).toFixed(0)+'px,'+(vy/m*far).toFixed(0)+'px,0) rotate('+(s[3]+(vx>0?1:-1)*(40+60*s[4])).toFixed(0)+'deg) scale('+(1+0.35*s[4]).toFixed(2)+')';sfx.card(i);hap(5);},i*45);});
+    },330);
+    setTimeout(boot,330+520);
+    setTimeout(()=>gate.classList.add('gone'),330+1500);
+  }
+  gate.addEventListener('click',open);
+  gate.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
 })();
 
 function relayout(){layout();lastLen=-1;ride();renderLive();}

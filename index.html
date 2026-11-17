@@ -84,7 +84,7 @@ button{font:inherit;color:inherit}
 /* ---- journey ---- */
 #journey{position:relative;margin:0 auto;max-width:460px;border-bottom:6px solid var(--board)}
 #sky{position:absolute;top:0;bottom:0;left:50%;width:100vw;margin-left:-50vw;z-index:0}
-@media (min-width:700px){#sky::after{content:"";position:absolute;left:0;right:0;top:0;height:var(--night,0px);opacity:.55;background-image:radial-gradient(#fff 1px,transparent 1.5px),radial-gradient(#fff .8px,transparent 1.3px),radial-gradient(#fff 1.2px,transparent 1.7px);background-size:173px 131px,97px 211px,311px 257px;background-position:20px 30px,60px 110px,150px 70px;-webkit-mask:linear-gradient(#000 calc(100% - 420px),transparent);mask:linear-gradient(#000 calc(100% - 420px),transparent)}}
+@media (min-width:700px){#sky::after{content:"";position:absolute;left:0;right:0;top:0;height:var(--night,0px);opacity:.55;background:var(--stars) 0 0/520px 520px;-webkit-mask:linear-gradient(#000 calc(100% - 420px),transparent);mask:linear-gradient(#000 calc(100% - 420px),transparent)}}
 #stage{position:relative;z-index:1;margin:0 16px}
 #track{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
 #train-g{pointer-events:auto;cursor:pointer}
@@ -186,6 +186,70 @@ details.src a{color:var(--text)}
 #win .ctl .btn[aria-pressed=true]{background:var(--board);color:var(--board-ink);border-color:var(--board-ink)}
 #win .ctl .btn{min-height:40px;padding:0 4px;width:100%;background:rgba(20,22,28,.82);border-color:#4a4f60;font-family:var(--font-display);font-weight:600;font-size:15px;letter-spacing:.04em;text-transform:uppercase}
 
+/* ---- boarding gate: a night-platform collage that waits for one tap, then clears away in layers ---- */
+#gate{position:fixed;inset:0;z-index:60;overflow:hidden;cursor:pointer;touch-action:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;--gs:1}
+#gate.gone{display:none}
+@media (min-width:700px){#gate{--gs:1.45}}
+body.gated #hero *{animation-play-state:paused!important}
+.g-bg{position:absolute;inset:0;background:linear-gradient(180deg,#191322 0,#2f2140 46%,#3b2647 100%);transition:opacity .75s .45s}
+.g-stars{position:absolute;inset:0;opacity:.6;background:var(--stars) 0 0/520px 520px;-webkit-mask:linear-gradient(#000 35%,transparent 78%);mask:linear-gradient(#000 35%,transparent 78%);transition:opacity .6s}
+.g-moon{position:absolute;left:47%;top:5.5%;width:calc(38px*var(--gs));height:calc(38px*var(--gs));transition:transform 1s cubic-bezier(.5,0,.9,.5),opacity .8s}
+.g-l{position:absolute;left:-40px;right:-640px;bottom:0;will-change:transform}
+.g-l i{display:block}
+.g-l::after{content:"";display:block;height:var(--fill);background:var(--c)}
+.g-l i{background:var(--c)}
+.g-far{--c:#4a3968;--fill:150px}.g-far i{height:116px;-webkit-mask:var(--m-far) 0 100%/480px 116px repeat-x;mask:var(--m-far) 0 100%/480px 116px repeat-x}
+.g-mid{--c:#2a1f45;--fill:104px}.g-mid i{height:92px;-webkit-mask:var(--m-mid) 0 100%/400px 92px repeat-x;mask:var(--m-mid) 0 100%/400px 92px repeat-x}
+.g-near{--c:#0e0b18;--fill:54px}.g-near i{height:192px;-webkit-mask:var(--m-near) 0 100%/300px 192px repeat-x;mask:var(--m-near) 0 100%/300px 192px repeat-x}
+.g-near::after{box-shadow:inset 0 12px 0 #0e0b18,inset 0 16px 0 var(--board)}
+.g-st{position:absolute;height:auto;border:calc(4px*var(--gs)) solid var(--paper);box-shadow:0 8px 18px rgba(0,0,0,.45);transform:rotate(var(--r));will-change:transform}
+.g-st.dim{filter:brightness(.72)}
+.g-c{position:absolute;left:50%;top:43%;width:min(312px,84vw);transform:translate(-50%,-50%);will-change:transform}
+.g-ticket{position:relative;background:var(--paper);color:var(--paper-ink);border-top:9px solid var(--red);border-radius:10px;padding:13px 18px 16px;transform:rotate(-3deg);box-shadow:0 16px 40px rgba(0,0,0,.55)}
+.g-ticket::before{content:"";position:absolute;left:10px;right:10px;bottom:64px;border-top:2px dashed rgba(35,35,58,.35)}
+.g-ticket p{margin:0}
+.g-k{font-family:var(--font-data);font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.g-from,.g-to b{font-family:var(--font-display);font-weight:700;font-size:44px;line-height:.95;letter-spacing:.01em;text-transform:uppercase}
+.g-from{margin-top:8px!important}
+.g-to{display:flex;align-items:baseline;gap:8px;margin-bottom:26px!important}
+.g-to span{font-family:var(--font-data);font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.7}
+.g-meta{font-family:var(--font-data);font-size:12px;line-height:1.55;padding-right:70px}
+.g-punch{position:absolute;right:16px;bottom:10px;width:46px;height:46px;border-radius:50%;border:2px dashed var(--paper-ink);display:flex;align-items:center;justify-content:center;font-family:var(--font-data);font-size:8.5px;letter-spacing:.08em}
+.g-punch::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--red)}
+.g-hint{margin:26px 0 0;text-align:center;font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:.16em;text-transform:uppercase;color:var(--board);text-shadow:0 2px 0 rgba(0,0,0,.5)}
+.g-chad{position:absolute;right:20px;bottom:14px;width:38px;height:38px;border-radius:50%;background:var(--paper);box-shadow:0 2px 4px rgba(0,0,0,.4);pointer-events:none}
+#gate.punched .g-punch{border-style:solid;background:#2c2040;box-shadow:inset 0 3px 7px rgba(0,0,0,.7);color:transparent}
+#gate.punched .g-punch::after{display:none}
+#gate.go{pointer-events:none}
+#gate.go .g-bg{opacity:0}
+#gate.go .g-stars,#gate.go .g-hint{opacity:0}
+#gate.go .g-moon{transform:translate3d(30vw,-40vh,0);opacity:0}
+#gate.go .g-c{transform:translate(-50%,-50%) translate3d(6vw,-115vh,0) rotate(-14deg)}
+#gate.go .g-far{transform:translate3d(-90px,125%,0)}
+#gate.go .g-mid{transform:translate3d(-220px,135%,0)}
+#gate.go .g-near{transform:translate3d(-480px,140%,0)}
+@media (prefers-reduced-motion:no-preference){
+  .g-c{transition:transform .85s cubic-bezier(.6,-.25,.75,.35)}
+  .g-c.in{animation:gdrop .8s cubic-bezier(.2,1.25,.3,1) both}
+  @keyframes gdrop{from{transform:translate(-50%,-95%) rotate(-10deg);opacity:0}}
+  #gate.punched .g-ticket{animation:gpress .3s ease-out}
+  @keyframes gpress{35%{transform:rotate(-3deg) scale(.955)}}
+  .g-st{animation:gin .7s cubic-bezier(.2,.9,.2,1) backwards,gbob var(--t) ease-in-out var(--dl) infinite alternate}
+  @keyframes gin{from{opacity:0;transform:rotate(var(--r)) scale(.7)}}
+  @keyframes gbob{to{transform:translate3d(0,-9px,0) rotate(calc(var(--r) + 1.6deg))}}
+  .g-st.out{animation:none;transition:transform var(--o) cubic-bezier(.55,0,.85,.45)}
+  .g-punch::after{animation:gring 1.5s ease-out infinite}
+  @keyframes gring{to{transform:scale(1.75);opacity:0}}
+  .g-hint{animation:gblink 1.5s ease-in-out infinite alternate;transition:opacity .3s}
+  @keyframes gblink{from{opacity:.45}}
+  .g-chad{animation:gchad .9s cubic-bezier(.4,0,.9,.6) forwards}
+  @keyframes gchad{to{transform:translate3d(-30px,70vh,0) rotate(420deg);opacity:.2}}
+  .g-far{transition:transform 1.15s cubic-bezier(.5,0,.9,.5)}
+  .g-mid{transition:transform 1s cubic-bezier(.5,0,.9,.5)}
+  .g-near{transition:transform .85s cubic-bezier(.5,0,.9,.5)}
+}
+@media (prefers-reduced-motion:reduce){#gate{transition:opacity .3s}#gate.go{opacity:0}.g-chad{display:none}}
+
 /* ---- flip card ---- */
 #flip{position:fixed;inset:0;z-index:60;visibility:hidden;perspective:1400px}
 #flip.on{visibility:visible}
@@ -231,8 +295,10 @@ details.src a{color:var(--text)}
   @keyframes rise{from{transform:translateY(16px);opacity:0}}
   .tile.tick{animation:tick .11s ease-in}
   @keyframes tick{from{transform:rotateX(-75deg);filter:brightness(.6)}}
-  .fan.dealt{animation:sway 7s ease-in-out infinite alternate}
-  @keyframes sway{from{transform:rotate(-1.6deg)}to{transform:rotate(1.6deg)}}
+  /* the idle sway starts and ends level, so the fan does not jump when the deal settles; it only pauses while cards are being picked */
+  .fan.dealt{animation:sway 14s ease-in-out infinite}
+  .fan.fast{animation-play-state:paused}
+  @keyframes sway{0%,100%{transform:rotate(0deg)}25%{transform:rotate(1.6deg)}75%{transform:rotate(-1.6deg)}}
   .fan button{transition:transform .34s cubic-bezier(.2,1.15,.3,1)}
   .fan.fast button{transition:transform .09s ease-out,box-shadow .09s}
   .fan button.win{animation:win .26s ease-in-out 3}
@@ -286,7 +352,27 @@ details.src a{color:var(--text)}
 @media (prefers-reduced-motion:reduce){#hero-train{transform:translateX(20px)}#card3d{transition:none}}
 </style>
 </head>
-<body>
+<body class="gated">
+<div id="gate" role="button" tabindex="0" aria-label="Tap to board">
+  <div class="g-bg"></div>
+  <div class="g-stars"></div>
+  <svg class="g-moon" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="#3c3052"/><path d="M20 2a18 18 0 0 1 0 36z" fill="#f3e9d2"/></svg>
+  <div class="g-l g-far"><i></i></div>
+  <div class="g-l g-mid"><i></i></div>
+  <div id="g-stamps" aria-hidden="true"></div>
+  <div class="g-l g-near"><i></i></div>
+  <div class="g-c in" id="g-c">
+    <div class="g-ticket" id="g-ticket">
+      <p class="g-k" id="g-k"></p>
+      <p class="g-from" id="g-from"></p>
+      <p class="g-to"><span>to</span><b id="g-to"></b></p>
+      <p class="g-meta" id="g-m1"></p>
+      <p class="g-meta" id="g-m2"></p>
+      <div class="g-punch" aria-hidden="true">PUNCH</div>
+    </div>
+    <p class="g-hint">Tap to board</p>
+  </div>
+</div>
 <header id="hero">
   <svg class="stars" id="hero-stars" aria-hidden="true"></svg>
   <div class="col">
@@ -489,6 +575,7 @@ function countUp(b,delay){
 
 /* ---- hero ---- */
 const stage=$('stage'),track=$('track'),journey=$('journey');
+let boot=()=>{};
 (function hero(){
   $('h-eyebrow').textContent=(R.train.number+' · '+R.train.name).toUpperCase();
   $('h-date').textContent=dates.toUpperCase()+' · DEP '+fmt(T0)+' · ARR '+fmt(T1);
@@ -503,43 +590,61 @@ const stage=$('stage'),track=$('track'),journey=$('journey');
   fl.style.setProperty('--tw',tw+'px');
   const row=s=>'<span class="row" aria-hidden="true">'+s.split('').map(c=>c===' '?'<span class="tile sp"></span>':'<span class="tile" data-c="'+esc(c)+'">'+(RM?esc(c):'')+'</span>').join('')+'</span>';
   fl.innerHTML=row(A)+'<span class="to" aria-hidden="true">TO</span>'+row(B);
-  if(!RM){const AB='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const runFlaps=()=>{const AB='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     [].forEach.call(fl.querySelectorAll('.tile[data-c]'),(t,i)=>{let n=5+i;const iv=setInterval(()=>{
-      n--;t.textContent=n<=0?t.dataset.c:AB[Math.random()*26|0];t.classList.remove('tick');void t.offsetWidth;t.classList.add('tick');if(n<=0)clearInterval(iv);},62);});}
+      n--;t.textContent=n<=0?t.dataset.c:AB[Math.random()*26|0];t.classList.remove('tick');void t.offsetWidth;t.classList.add('tick');if(n<=0)clearInterval(iv);},62);});};
   /* fan of stamps */
   const step=52/Math.max(1,N-1);
   const fan=$('fan'),hint=$('deckhint');
   fan.innerHTML=P.map((p,i)=>'<button type="button" data-i="'+i+'" aria-label="'+esc(p.name_en)+'"><img alt="" width="96" height="128" src="'+(p.has_art!==false?'art/'+esc(p.slug)+'.webp':'')+'"></button>').join('');
   const cards=[].slice.call(fan.children),ang=i=>(i-(N-1)/2)*step,jit=i=>hash('j'+i)*3-1.5,setA=(c,a)=>{c.style.transform='rotate('+a.toFixed(2)+'deg)';};
-  let dealt=false,busy=false;
-  const ready=()=>{dealt=true;busy=false;fan.classList.add('dealt');hint.hidden=false;};
+  let dealt=false,busy=false,phase=0,queued=false;
+  const ready=()=>{dealt=true;busy=false;phase=4;fan.classList.add('dealt');hint.hidden=false;if(queued){queued=false;setTimeout(ripple,160);}};
   cards.forEach((c,i)=>{c.style.zIndex=N-i;setA(c,RM?ang(i):jit(i));if(RM)c.style.zIndex=i;});
   /* cut the deck, riffle it, deal the fan. Runs by itself on load; browsers only allow its sound and buzz once the page has been touched */
   function shuffle(){
-    if(busy)return;busy=true;unlock();
+    if(busy)return;busy=true;phase=1;unlock();
     setTimeout(()=>{hap(12);sfx.card(0);cards.forEach((c,i)=>setA(c,(i%2?17:-17)+jit(i)));},0);
+    setTimeout(()=>{phase=2;},380);
     setTimeout(()=>cards.forEach((c,i)=>setTimeout(()=>{setA(c,jit(i));sfx.card(i);hap(4);},i*42)),380);
+    setTimeout(()=>{phase=3;},380+N*42+260);
     setTimeout(()=>cards.forEach((c,i)=>setTimeout(()=>{c.style.zIndex=i;setA(c,ang(i));sfx.dealt(i);hap(6);if(i===N-1)setTimeout(ready,380);},i*62)),380+N*42+260);
   }
-  if(RM)ready();else setTimeout(shuffle,1250);
-  fan.addEventListener('click',e=>{const b=e.target.closest('button');if(b&&dealt&&!busy)jumpTo(+b.dataset.i);});
+  /* the opening shuffle is silent because browsers allow no sound or buzz before a touch; the first tap anywhere replays a short ripple of the fan with both */
+  let echoed=false,echoEnd=0;
+  function ripple(){
+    if(RM||!dealt||busy)return false;const r=fan.getBoundingClientRect();if(r.bottom<60||r.top>window.innerHeight-60)return false;
+    busy=true;unlock();fan.classList.add('fast');
+    cards.forEach((c,i)=>setTimeout(()=>{c.style.transform='rotate('+ang(i).toFixed(2)+'deg) translateY(-16px) scale(1.07)';sfx.dealt(i);hap(7);setTimeout(()=>setA(c,ang(i)),120);},i*46));
+    const d=N*46+240;setTimeout(()=>{fan.classList.remove('fast');busy=false;},d);echoEnd=performance.now()+d;return true;
+  }
+  /* a tap while the cards are still shuffling switches sound on for the rest of it; if only the tail was left, the ripple follows the deal */
+  document.addEventListener('click',e=>{
+    if(echoed)return;echoed=true;if(e.target.closest('#deckhint'))return;
+    if(!dealt){unlock();if(phase>=3)queued=true;return;}
+    ripple();
+  },true);
+  fan.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||!dealt)return;const i=+b.dataset.i,d=echoEnd-performance.now();if(d>0)setTimeout(()=>jumpTo(i),d);else if(!busy)jumpTo(i);});
   /* surprise me: a light runs to and fro across the laid-out cards, slows, and lands on one; the page then rides there and flips it */
   const lift=(i,on)=>{const c=cards[i];c.style.zIndex=on?99:i;c.style.transform='rotate('+ang(i).toFixed(2)+'deg)'+(on?' translateY(-20px) scale(1.14)':'');c.classList.toggle('hot',on);};
   hint.addEventListener('click',()=>{
-    if(busy||!dealt)return;busy=true;unlock();fan.classList.add('fast');fan.classList.remove('dealt');
+    if(busy||!dealt)return;busy=true;unlock();fan.classList.add('fast');
     const target=Math.random()*N|0,per=2*(N-1),pos=k=>{const m=k%per;return m<N?m:per-m;};
     let K=RM?0:22+(Math.random()*6|0),k=0,prev=-1;while(pos(K)!==target)K++;
     const step=()=>{
       const i=pos(k);if(prev>=0)lift(prev,false);lift(i,true);prev=i;
       if(k<K){sfx.pick(i);hap(5);k++;setTimeout(step,55+240*Math.pow(k/K,2.6));return;}
       sfx.chime();hap([18,40,30]);cards[i].classList.add('win');
-      setTimeout(()=>{cards[i].classList.remove('win');lift(i,false);fan.classList.remove('fast');fan.classList.add('dealt');busy=false;jumpTo(i,()=>openCard(i));},RM?0:950);
+      setTimeout(()=>{cards[i].classList.remove('win');lift(i,false);fan.classList.remove('fast');busy=false;jumpTo(i,()=>openCard(i));},RM?0:950);
     };
     step();
   });
   const states=new Set(P.map(p=>p.state).filter(Boolean)).size;
   $('h-stats').innerHTML=[[TOTAL.toLocaleString('en-IN'),'km'],[Math.floor(DUR/60)+'h'+String(DUR%60).padStart(2,'0'),'on the train'],[states,'states'],[N,'stamps']].map(s=>'<div><b>'+esc(s[0])+'</b><span>'+esc(s[1])+'</span></div>').join('');
-  [].forEach.call($('h-stats').querySelectorAll('b'),b=>countUp(b,2300));
+  /* nothing in the hero moves until the gate has been tapped: that tap is what lets the shuffle have sound and haptics */
+  boot=()=>{boot=()=>{};document.body.classList.remove('gated');
+    if(RM){ready();return;}
+    runFlaps();[].forEach.call($('h-stats').querySelectorAll('b'),b=>countUp(b,2300));setTimeout(shuffle,1250);};
   /* the train that passes */
   let t='<polygon points="4,25 -90,8 -90,42" fill="#f6c81e" opacity=".22"/><path d="M4 40V17q0-9 10-9h92v32z" fill="#d8452b" stroke="#141414" stroke-width="1.5"/><rect x="4" y="23" width="102" height="5" fill="#f3e9d2"/><rect x="10" y="12" width="15" height="8" rx="1" fill="#f6c81e" stroke="#141414"/><path d="M58 8l-9-7h22l-9 7" fill="none" stroke="#141414" stroke-width="1.5"/>';
   [20,36,78,94].forEach(x=>{t+='<circle cx="'+x+'" cy="41" r="4.5" fill="#141414"/>';});
@@ -908,6 +1013,46 @@ if('IntersectionObserver' in window){
   const urls=[];[P,R.rivers||[],R.borders||[]].forEach(list=>list.forEach(o=>(o.src||[]).forEach(u=>{if(urls.indexOf(u)<0)urls.push(u);})));
   const host=u=>{try{return new URL(u).hostname.replace(/^www\./,'');}catch(e){return u;}};
   $('src-body').innerHTML=(R.notes||[]).map(n=>'<p>'+esc(n)+'</p>').join('')+'<ul>'+urls.map(u=>'<li><a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(host(u))+esc(decodeURIComponent(u.replace(/^https?:\/\/[^/]+/,'')).replace(/_/g,' ').slice(0,60))+'</a></li>').join('')+'</ul>';
+})();
+
+/* ---- boarding gate ---- */
+(function(){
+  const gate=$('gate');if(!gate){boot();return;}
+  /* one random star tile, shared by this screen and the sky beside the journey */
+  let sc='';for(let k=0;k<46;k++)sc+='<circle cx="'+(Math.random()*520).toFixed(1)+'" cy="'+(Math.random()*520).toFixed(1)+'" r="'+(0.5+Math.random()*0.9).toFixed(2)+'" fill="#fff" opacity="'+(0.3+Math.random()*0.65).toFixed(2)+'"/>';
+  document.documentElement.style.setProperty('--stars','url("data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="520" height="520">'+sc+'</svg>')+'")');
+  const gc=$('g-c');gc.addEventListener('animationend',e=>{if(e.target===gc)gc.classList.remove('in');});
+  ['--m-far','--m-mid','--m-near'].forEach(k=>gate.style.setProperty(k,win.style.getPropertyValue(k)));
+  $('g-k').textContent='Journey Stamps · '+R.train.number;
+  $('g-from').textContent=short(P[0]);$('g-to').textContent=short(last);
+  $('g-m1').textContent=dates.toUpperCase()+' · DEP '+fmt(T0);
+  $('g-m2').textContent=TOTAL.toLocaleString('en-IN')+' KM · '+N+' STAMPS';
+  /* stamps pinned around the ticket: x and y in percent of the screen, width in px, tilt, depth (bigger is nearer) */
+  const spots=[[5,7,92,-10,0.7],[63,16,104,8,1],[31,20,68,-4,0.45],[-5,29,86,-14,0.8],[76,36,90,12,0.9],[-3,60,112,9,1.2],[69,59,118,-8,1.3],[33,67,76,5,0.55]];
+  const pick=[0,4,6,13,10,1,14,9].map(i=>P[Math.min(i,N-1)]).filter(p=>p.has_art!==false);
+  $('g-stamps').innerHTML=pick.map((p,i)=>{const s=spots[i%spots.length];
+    return '<img class="g-st'+(s[4]<0.6?' dim':'')+'" alt="" width="96" height="128" src="art/'+esc(p.slug)+'.webp" style="left:'+s[0]+'%;top:'+s[1]+'%;width:calc('+s[2]+'px*var(--gs));--r:'+s[3]+'deg;--t:'+(2.6+i*0.37).toFixed(2)+'s;--dl:'+(0.7+i*0.21).toFixed(2)+'s;animation-delay:'+(0.15+i*0.07).toFixed(2)+'s,'+(0.9+i*0.21).toFixed(2)+'s">';}).join('');
+  const sts=[].slice.call(gate.querySelectorAll('.g-st'));
+  let opened=false;
+  const block=e=>{if(!opened)e.preventDefault();};
+  gate.addEventListener('touchmove',block,{passive:false});gate.addEventListener('wheel',block,{passive:false});
+  function open(){
+    if(opened)return;opened=true;unlock();gc.classList.remove('in');
+    gate.classList.add('punched');sfx.thunk();hap(28);
+    if(RM){gate.classList.add('go');boot();setTimeout(()=>gate.classList.add('gone'),320);return;}
+    const chad=document.createElement('i');chad.className='g-chad';$('g-ticket').appendChild(chad);
+    setTimeout(()=>{
+      gate.classList.add('go');
+      const cx=window.innerWidth/2,cy=window.innerHeight*0.43;
+      sts.forEach((el,i)=>{const s=spots[i%spots.length],r=el.getBoundingClientRect(),vx=r.left+r.width/2-cx,vy=r.top+r.height/2-cy,m=Math.hypot(vx,vy)||1,far=(520+760*s[4])*(window.innerWidth>700?1.6:1);
+        el.style.setProperty('--o',(1.15-0.38*s[4]).toFixed(2)+'s');el.classList.add('out');
+        setTimeout(()=>{el.style.transform='translate3d('+(vx/m*far).toFixed(0)+'px,'+(vy/m*far).toFixed(0)+'px,0) rotate('+(s[3]+(vx>0?1:-1)*(40+60*s[4])).toFixed(0)+'deg) scale('+(1+0.35*s[4]).toFixed(2)+')';sfx.card(i);hap(5);},i*45);});
+    },330);
+    setTimeout(boot,330+520);
+    setTimeout(()=>gate.classList.add('gone'),330+1500);
+  }
+  gate.addEventListener('click',open);
+  gate.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
 })();
 
 function relayout(){layout();lastLen=-1;ride();renderLive();}
